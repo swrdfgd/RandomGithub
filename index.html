@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random GitHub Repository</title>
+
+<style>
+:root {
+  --bg: #0f172a;
+  --card: #111827;
+  --accent: #38bdf8;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #020617, var(--bg));
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  width: 100%;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+header p {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.card {
+  background: linear-gradient(180deg, #020617, var(--card));
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transition: transform .3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.repo-name {
+  font-size: 1.6rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.repo-owner {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 15px;
+}
+
+.repo-desc {
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.repo-link {
+  display: inline-block;
+  text-decoration: none;
+  color: #020617;
+  background: var(--accent);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: background .3s ease;
+}
+
+.repo-link:hover {
+  background: #7dd3fc;
+}
+
+.actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+button {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 12px 26px;
+  font-size: 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+button:hover {
+  background: var(--accent);
+  color: #020617;
+}
+
+footer {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.7rem;
+  }
+
+  .repo-name {
+    font-size: 1.3rem;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <header>
+    <h1>Random GitHub Repository</h1>
+    <p id="advice">Sometimes discovery begins with curiosity.</p>
+  </header>
+
+  <div class="card" id="repoCard">
+    <div class="repo-name">Click randomize to begin</div>
+    <div class="repo-owner"></div>
+    <div class="repo-desc">Every repository is a story written by someone, somewhere.</div>
+  </div>
+
+  <div class="actions">
+    <button onclick="randomizeRepo()">Randomize</button>
+  </div>
+
+  <footer>
+    Explore with respect. Learn with patience.
+  </footer>
+
+</div>
+
+<script>
+const adviceList = [
+  "Code is temporary, learning is permanent.",
+  "Behind every repository is someone who tried.",
+  "Not all projects are famous, but all have value.",
+  "Read before judging. Explore before dismissing.",
+  "Great ideas often hide in small repositories."
+];
+
+function randomAdvice() {
+  return adviceList[Math.floor(Math.random() * adviceList.length)];
+}
+
+function randomSince() {
+  return Math.floor(Math.random() * 60000000);
+}
+
+async function randomizeRepo() {
+  document.getElementById("advice").innerText = randomAdvice();
+
+  const card = document.getElementById("repoCard");
+  card.innerHTML = "<div class='repo-desc'>Searching the universe of code...</div>";
+
+  try {
+    const since = randomSince();
+    const res = await fetch(`https://api.github.com/repositories?since=${since}`);
+    const data = await res.json();
+
+    const repo = data[Math.floor(Math.random() * data.length)];
+
+    card.innerHTML = `
+      <div class="repo-name">${repo.name}</div>
+      <div class="repo-owner">by ${repo.owner.login}</div>
+      <div class="repo-desc">${repo.description || "No description provided. Sometimes silence still teaches."}</div>
+      <a class="repo-link" href="${repo.html_url}" target="_blank">Visit Repository</a>
+    `;
+  } catch (e) {
+    card.innerHTML = "<div class='repo-desc'>Something went wrong. Try again calmly.</div>";
+  }
+}
+</script>
+
+</body>
+</html>
