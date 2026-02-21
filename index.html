@@ -165,12 +165,49 @@ const adviceList = [
   "Behind every repository is someone who tried.",
   "Not all projects are famous, but all have value.",
   "Read before judging. Explore before dismissing.",
-  "Great ideas often hide in small repositories."
+  "Great ideas often hide in small repositories.",
+    "Every commit tells a story.",
+  "Small projects build big skills.",
+  "Someone learned something by writing this.",
+  "Not perfect, but progressing.",
+  "Curiosity leads to discovery.",
+  "Even unfinished code has lessons inside.",
+  "Experimentation is the root of innovation.",
+  "Every expert once pushed their first commit.",
+  "Bugs are proof that you are trying.",
+  "Open source is built on courage.",
+  "Documentation is love for future developers.",
+  "Refactoring is a sign of growth.",
+  "Simple ideas can solve complex problems.",
+  "Creativity thrives in side projects.",
+  "Every line written improves the next.",
+  "Collaboration turns code into community.",
+  "Mistakes today become experience tomorrow.",
+  "Consistency beats intensity.",
+  "A small improvement is still progress.",
+  "Code shared is knowledge multiplied.",
+  "Learning never returns a null value.",
+  "The best projects start as experiments.",
+  "Think, test, improve, repeat.",
+  "Innovation begins with curiosity.",
+  "Even abandoned repos once inspired someone.",
+  "Optimization comes after understanding.",
+  "Readable code is a gift to others.",
+  "Build first. Polish later.",
+  "Every repository is a snapshot of growth.",
+  "Debugging sharpens the mind.",
+  "Progress is measured in iterations.",
+  "Version control is time travel for developers.",
+  "Start simple. Scale wisely.",
+  "Ideas grow when shared.",
+  "Passion commits more than code."
 ];
 
 function randomAdvice() {
   return adviceList[Math.floor(Math.random() * adviceList.length)];
 }
+
+document.getElementById("advice").innerText = randomAdvice();
 
 function randomSince() {
   return Math.floor(Math.random() * 60000000);
